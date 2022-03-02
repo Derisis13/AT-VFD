@@ -8,11 +8,10 @@ set(TARGET_CPU ATmega88)
 
 add_compile_definitions("__AVR_${TARGET_CPU}__")
 include_directories(/usr/lib/avr/include)
+set(CMAKE_C_FLAGS "-O3 -Wall")
 
 add_link_options(-Wl,--print-memory-usage)
-add_executable(${PROJECT_NAME} main.c
-        PT6302.c PT6302.h
-        )
+add_executable(${PROJECT_NAME} main.c)
 
 add_custom_target(
         FLASH

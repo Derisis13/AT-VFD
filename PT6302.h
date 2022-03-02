@@ -5,17 +5,6 @@
 #ifndef _PT6302_H_
 #define _PT6302_H_
 
-/* PT6302 timing constants, all in usec */
-#define TCW 1     //CLKB pulse width
-#define TDOFF 8   //Data processing time
-#define DTCSH 16  //time difference between tDOFF and tCSH
-#define TPRZ 100  //VDD rise time
-#define TWRSTB 1  //RSTB pulse width
-
-#define RSTpin (uint8_t) (1 << PC2)
-#define CSBpin (uint8_t) (1 << PB0)
-#define CLKBpin (uint8_t) (1 << PB6)
-#define DINpin (uint8_t) (1 << PB7)
 
 
 /* -------------------------------------------------------------
