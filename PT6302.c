@@ -45,29 +45,24 @@ void transmit_bytes (const uint8_t *payload, const uint8_t size)
   PORTB |= CSBpin;
 }
 
-void send_command (const uint8_t command)
-{
-  transmit_bytes (&command, 1);
-}
-
 
 void set_display_brightness (uint8_t level)
 {
   switch (level)
     {
-      case 0:send_command (0x0A);
+      case 0:transmit_bytes (0x0A, 1);
       break;
-      case 1:send_command (0x2A);
+      case 1:transmit_bytes (0x2A, 1);
       break;
-      case 2:send_command (0x4A);
+      case 2:transmit_bytes (0x4A, 1);
       break;
-      case 3:send_command (0x6A);
+      case 3:transmit_bytes (0x6A, 1);
       break;
-      case 4:send_command (0x8A);
+      case 4:transmit_bytes (0x8A, 1);
       break;
-      case 5:send_command (0xAA);
+      case 5:transmit_bytes (0xAA, 1);
       break;
-      case 6:send_command (0xCA);
-      default:send_command (0xEA);
+      case 6:transmit_bytes (0xCA, 1);
+      default:transmit_bytes (0xEA, 1);
     }
 }

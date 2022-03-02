@@ -11,7 +11,7 @@ include_directories(/usr/lib/avr/include)
 
 add_link_options(-Wl,--print-memory-usage)
 add_executable(${PROJECT_NAME} main.c
-        #PT6302.c PT6302.h
+        PT6302.c PT6302.h
         )
 
 add_custom_target(
