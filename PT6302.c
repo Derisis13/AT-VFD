@@ -44,25 +44,3 @@ void transmit_bytes (const uint8_t *payload, const uint8_t size)
   _delay_us (DTCSH);
   PORTB |= CSBpin;
 }
-
-
-void set_display_brightness (uint8_t level)
-{
-  switch (level)
-    {
-      case 0:transmit_bytes (0x0A, 1);
-      break;
-      case 1:transmit_bytes (0x2A, 1);
-      break;
-      case 2:transmit_bytes (0x4A, 1);
-      break;
-      case 3:transmit_bytes (0x6A, 1);
-      break;
-      case 4:transmit_bytes (0x8A, 1);
-      break;
-      case 5:transmit_bytes (0xAA, 1);
-      break;
-      case 6:transmit_bytes (0xCA, 1);
-      default:transmit_bytes (0xEA, 1);
-    }
-}

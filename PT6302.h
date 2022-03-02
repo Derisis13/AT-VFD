@@ -19,7 +19,7 @@
 
 
 /* -------------------------------------------------------------
- * Innitial setup for the VFD controller interface
+ * Initial setup for the VFD controller interface
  * Sets up the connected pins and leaves them in inactive state.
  * ------------------------------------------------------------- */
 void PT6302_startup(void);
@@ -31,12 +31,5 @@ void PT6302_startup(void);
  * ------------------------------------------------------------------------------- */
 void transmit_bytes (const uint8_t* payload, uint8_t size);
 
-
-/* --------------------------------------------------------------
- * Set the brightness of the VFD
- * level can be between 0-7, 7 and larger will set max brightness
- * It sets the display's duty cycle to conroll the brightness
- * -------------------------------------------------------------- */
-void set_display_brightness (uint8_t level);
 
 #endif //_PT6302_H_

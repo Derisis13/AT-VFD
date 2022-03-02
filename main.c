@@ -6,10 +6,8 @@
 
 int main ()
 {
-  PT6302_startup ();
-
+  PT6302_startup();
   while (1)
     {
-
     }
 }
