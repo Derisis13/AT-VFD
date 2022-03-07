@@ -23,20 +23,26 @@ enum pins {
  * Initial setup for the VFD controller interface
  * Sets up the connected pins and leaves them in inactive state.
  * ------------------------------------------------------------- */
-void PT6302_startup(void);
-
+void PT6302_startup (void);
 
 /* -------------------------------------------------------------------------------
  * Transmits size byte of data through the VFD controller's interface from payload
  * Handles CLKB, CSB and timing constraints
  * ------------------------------------------------------------------------------- */
-void transmit_bytes (const uint8_t* payload, uint8_t size);
-
+void transmit_bytes (const uint8_t *payload, uint8_t size);
 
 /* ---------------------------------------------------------
  * Sets GP1 and GP2 to the values given in the function call
  * Handles the entire communication
  * --------------------------------------------------------- */
-void set_ports(uint8_t gp1, uint8_t gp2);
+void set_ports (uint8_t gp1, uint8_t gp2);
+
+/* -----------------------------------------------------------
+ * Sets duty cycle of controlled VFD
+ * Brightness between 0 and 7 are accepted, any higher means 7
+ * duty = (brightness + 8)/16 (valid between 8/16 and 15/16)
+ * Handles the entire communication
+ * ----------------------------------------------------------- */
+void set_duty (uint8_t brightness);
 
 #endif //_PT6302_H_
