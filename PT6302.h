@@ -37,6 +37,13 @@ void transmit_bytes (const uint8_t *payload, uint8_t size);
  * --------------------------------------------------------- */
 void set_ports (uint8_t gp1, uint8_t gp2);
 
+/* ---------------------------------------------------------------------------------------
+ * Sets the number of digit_count the VFD has
+ * digit_count below 9 are interpreted as 9 and digit_count above 16 are interpreted as 16
+ * Handles the entire communication
+ * --------------------------------------------------------------------------------------- */
+void set_digits(uint8_t digit_count);
+
 /* -----------------------------------------------------------
  * Sets duty cycle of controlled VFD
  * Brightness between 0 and 7 are accepted, any higher means 7

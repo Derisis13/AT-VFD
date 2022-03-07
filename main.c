@@ -12,6 +12,7 @@ int main ()
 {
   PT6302_startup ();
   set_ports (1, 1);
+  set_digits (12);
   set_duty (7);
   while (1)
     {

@@ -58,6 +58,17 @@ void set_duty (uint8_t brightness)
     {
       brightness = 7;
     }
-  uint8_t command = 0x50 | brightness;
+  const uint8_t command = 0x50 | brightness;
+  transmit_bytes (&command, 1);
+}
+
+void set_digits (uint8_t digit_count)
+{
+  if (digit_count >= 16)
+    digit_count = 8; //we'll subtract 8 later from this number
+  if (digit_count < 9)
+    digit_count = 9;
+  digit_count -= 8;
+  const uint8_t command = 0x60 | digit_count;
   transmit_bytes (&command, 1);
 }
