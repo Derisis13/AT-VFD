@@ -54,12 +54,6 @@ void PT6302_startup (void);
  * ---------------------------------------------- */
 void PT6302_reset (void);
 
-/* --------------------------------
- * Transmits the LSB of data
- * Handles communication except CSB
- * --------------------------------- */
-static inline void transmit_bit (uint8_t data);
-
 /* ------------------------------------------------
  * Transmits one character (data)
  * Handles the entire communication

@@ -32,6 +32,10 @@ inline void PT6302_startup (void)
   PT6302_reset ();
 }
 
+/* --------------------------------
+ * Transmits the LSB of data
+ * Handles communication except CSB
+ * --------------------------------- */
 static inline void transmit_bit (const uint8_t data)
 {
   PORTB &= ~CLKBpin;
