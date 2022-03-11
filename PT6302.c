@@ -34,6 +34,30 @@ inline void PT6302_startup (void)
   _delay_us (TWRSTB);
 }
 
+inline void transmit_bit(const uint8_t data)
+{
+  PORTB &= ~CLKBpin;
+  if ((data & 0x01) == 0)
+    PORTB &= ~DINpin;
+  else
+    PORTB |= DINpin;
+  _delay_us (TCW);
+  PORTB |= CLKBpin;
+  _delay_us (TCW);
+}
+
+void transmit_byte (uint8_t data)
+{
+  _delay_us (1);
+  PORTB &= ~CSBpin;
+  for (int j = 0; j < 8; ++j, data = (data >> 1))
+    {
+      transmit_bit (data);
+    }
+  _delay_us (TCSH);
+  PORTB |= CSBpin;
+}
+
 void transmit_bytes (const uint8_t *payload, const uint8_t size)
 {
   _delay_us (1);
@@ -43,14 +67,7 @@ void transmit_bytes (const uint8_t *payload, const uint8_t size)
       uint8_t data = payload[i];
       for (int j = 0; j < 8; ++j, data = (data >> 1))
         {
-          PORTB &= ~CLKBpin;
-          if ((data & 0x01) == 0)
-            PORTB &= ~DINpin;
-          else
-            PORTB |= DINpin;
-          _delay_us (TCW);
-          PORTB |= CLKBpin;
-          _delay_us (TCW);
+          transmit_bit (data);
         }
       _delay_us (TDOFF);
     }
@@ -65,7 +82,7 @@ void set_ports (uint8_t gp1, uint8_t gp2)
     command |= 0x01;
   if (gp2 != 0)
     command |= 0x02;
-  transmit_bytes (&command, 1);
+  transmit_byte (command);
 }
 
 void set_duty (uint8_t brightness)
@@ -75,7 +92,7 @@ void set_duty (uint8_t brightness)
       brightness = 7;
     }
   const uint8_t command = 0x50 | brightness;
-  transmit_bytes (&command, 1);
+  transmit_byte (command);
 }
 
 void set_digits (uint8_t digit_count)
@@ -86,7 +103,7 @@ void set_digits (uint8_t digit_count)
     digit_count = 9;
   digit_count -= 8;
   const uint8_t command = 0x60 | digit_count;
-  transmit_bytes (&command, 1);
+  transmit_byte (command);
 }
 
 void set_ADRAM (const uint8_t address, const uint8_t *data, uint8_t size)
@@ -119,7 +136,6 @@ void set_CGRAM (const uint8_t address, const uint8_t *data, uint8_t size)
     }
   transmit_bytes (payload, size);
 }
-
 void set_DCRAM (const uint8_t address, const uint8_t *cg_address, uint8_t size)
 {
   if (address > DISPLAY_DIGITS)
@@ -133,4 +149,15 @@ void set_DCRAM (const uint8_t address, const uint8_t *cg_address, uint8_t size)
       payload[i] = cg_address[i - 1];
     }
   transmit_bytes (payload, size);
+}
+void all_on (void)
+{
+  const uint8_t command = 0x72;
+  transmit_byte (command);
+}
+
+void all_off (void)
+{
+  const uint8_t command = 0x71;
+  transmit_byte (command);
 }

@@ -1,3 +1,4 @@
+#pragma once
 /*
  * AT-VFD
  * Copyright (C) 2022  László Párkányi
@@ -18,15 +19,13 @@
  * USA
  */
 
-#ifndef _PT6302_H_
-#define _PT6302_H_
-
 #define DISPLAY_DIGITS 12
 
 /* PT6302 timing constants, all in usec */
 static const uint8_t TCW = 1;     //CLKB pulse width
 static const uint8_t TDOFF = 16;  //Data processing time
 static const uint8_t DTCSH = 16;  //time difference between tDOFF and tCSH
+static const uint8_t TCSH = 32;   //Chip select hold time
 static const uint8_t TPRZ = 100;  //VDD rise time
 static const uint8_t TWRSTB = 1;  //RSTB pulse width
 
@@ -49,6 +48,19 @@ enum RAM_types{
  * ------------------------------------------------------------- */
 void PT6302_startup (void);
 
+/* --------------------------------
+ * Transmits the LSB of data
+ * Handles communication except CSB
+ * --------------------------------- */
+static inline void transmit_bit(uint8_t data);
+
+/* ------------------------------------------------
+ * Transmits one character (data)
+ * Handles the entire communication
+ * this is (mostly) intended to be used by wrappers
+ * ------------------------------------------------ */
+void transmit_byte(uint8_t data);
+
 /* -------------------------------------------------------------------------------
  * Transmits size byte of data through the VFD controller's interface from payload
  * Handles CLKB, CSB and timing constraints
@@ -59,14 +71,14 @@ void transmit_bytes (const uint8_t *payload, uint8_t size);
  * Sets GP1 and GP2 to the values given in the function call
  * Handles the entire communication
  * --------------------------------------------------------- */
-void set_ports (uint8_t gp1, uint8_t gp2);
+inline void set_ports (uint8_t gp1, uint8_t gp2);
 
 /* ---------------------------------------------------------------------------------------
  * Sets the number of digit_count the VFD has
  * digit_count below 9 are interpreted as 9 and digit_count above 16 are interpreted as 16
  * Handles the entire communication
  * --------------------------------------------------------------------------------------- */
-void set_digits(uint8_t digit_count);
+inline void set_digits(uint8_t digit_count);
 
 /* -----------------------------------------------------------
  * Sets duty cycle of controlled VFD
@@ -74,7 +86,7 @@ void set_digits(uint8_t digit_count);
  * duty = (brightness + 8)/16 (valid between 8/16 and 15/16)
  * Handles the entire communication
  * ----------------------------------------------------------- */
-void set_duty (uint8_t brightness);
+inline void set_duty (uint8_t brightness);
 
 /* ------------------------------------------------------------------------------------------
  * Set the content of the DCRAM - this will display a character from the CGROM/RAM at address
@@ -108,4 +120,15 @@ void set_CGRAM (uint8_t address, const uint8_t *data, uint8_t size);
  * --------------------------------------------------------------------------------------- */
 void set_ADRAM(uint8_t address, const uint8_t* data, uint8_t size);
 
-#endif //_PT6302_H_
+/* -----------------------------------------
+ * Turn all outputs of the VFD controller on
+ * This is primarily used for testing
+ * Handles the entire communication
+ * ----------------------------------------- */
+inline void all_on(void);
+
+/* ------------------------------------------
+ * Turn all outputs of the VFD controller off
+ * Handles the entire communication
+ * ------------------------------------------ */
+inline void all_off(void);

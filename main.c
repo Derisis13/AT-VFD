@@ -25,10 +25,6 @@
 #include <util/delay.h>
 #include "PT6302.h"
 
-/* PT6302 commands */
-static const uint8_t lighton = 0x72;
-static const uint8_t lightoff = 0x71;
-
 
 int main ()
 {
@@ -46,9 +42,9 @@ int main ()
   set_DCRAM (0, characters, DISPLAY_DIGITS);
   while (1)
     {
-      transmit_bytes (&lighton, 1);
+      all_on();
       _delay_us (1000);
-      transmit_bytes (&lightoff, 1);
+      all_off();
       _delay_us (1000);
     }
 }
