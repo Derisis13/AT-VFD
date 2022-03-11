@@ -36,7 +36,7 @@ enum pins {
   DINpin = (1 << PB7),
 };
 
-enum RAM_types{
+enum RAM_types {
   DCRAM = 0x10,
   CGRAM = 0x20,
   ADRAM = 0x30,
@@ -52,20 +52,20 @@ void PT6302_startup (void);
  * Resets the VFD controller trough its reset pin
  * Handles reset delays
  * ---------------------------------------------- */
-inline void PT6302_reset(void);
+void PT6302_reset (void);
 
 /* --------------------------------
  * Transmits the LSB of data
  * Handles communication except CSB
  * --------------------------------- */
-static inline void transmit_bit(uint8_t data);
+static inline void transmit_bit (uint8_t data);
 
 /* ------------------------------------------------
  * Transmits one character (data)
  * Handles the entire communication
  * this is (mostly) intended to be used by wrappers
  * ------------------------------------------------ */
-void transmit_byte(uint8_t data);
+void transmit_byte (uint8_t data);
 
 /* -------------------------------------------------------------------------------
  * Transmits size byte of data through the VFD controller's interface from payload
@@ -77,14 +77,14 @@ void transmit_bytes (const uint8_t *payload, uint8_t size);
  * Sets GP1 and GP2 to the values given in the function call
  * Handles the entire communication
  * --------------------------------------------------------- */
-inline void set_ports (uint8_t gp1, uint8_t gp2);
+void set_ports (uint8_t gp1, uint8_t gp2);
 
 /* ---------------------------------------------------------------------------------------
  * Sets the number of digit_count the VFD has
  * digit_count below 9 are interpreted as 9 and digit_count above 16 are interpreted as 16
  * Handles the entire communication
  * --------------------------------------------------------------------------------------- */
-inline void set_digits(uint8_t digit_count);
+void set_digits (uint8_t digit_count);
 
 /* -----------------------------------------------------------
  * Sets duty cycle of controlled VFD
@@ -92,7 +92,7 @@ inline void set_digits(uint8_t digit_count);
  * duty = (brightness + 8)/16 (valid between 8/16 and 15/16)
  * Handles the entire communication
  * ----------------------------------------------------------- */
-inline void set_duty (uint8_t brightness);
+void set_duty (uint8_t brightness);
 
 /* ------------------------------------------------------------------------------------------
  * Set the content of the DCRAM - this will display a character from the CGROM/RAM at address
@@ -103,7 +103,7 @@ inline void set_duty (uint8_t brightness);
  *  if DISPLAY_DIGITS is exceeded, no characters will be set
  * Handles the entire communication
  * ------------------------------------------------------------------------------------------ */
-void set_DCRAM(uint8_t address, const uint8_t* cg_address, uint8_t size);
+void set_DCRAM (uint8_t address, const uint8_t *cg_address, uint8_t size);
 
 /* -------------------------------------------------------------------------------
  * Set the content of the CGRAM - this will write custom characters into the CGRAM
@@ -124,17 +124,17 @@ void set_CGRAM (uint8_t address, const uint8_t *data, uint8_t size);
  *  if DISPLAY_DIGITS is exceeded, no segment pairs will be set
  * Handles the entire communication
  * --------------------------------------------------------------------------------------- */
-void set_ADRAM(uint8_t address, const uint8_t* data, uint8_t size);
+void set_ADRAM (uint8_t address, const uint8_t *data, uint8_t size);
 
 /* -----------------------------------------
  * Turn all outputs of the VFD controller on
  * This is primarily used for testing
  * Handles the entire communication
  * ----------------------------------------- */
-inline void all_on(void);
+void all_on (void);
 
 /* ------------------------------------------
  * Turn all outputs of the VFD controller off
  * Handles the entire communication
  * ------------------------------------------ */
-inline void all_off(void);
+void all_off (void);

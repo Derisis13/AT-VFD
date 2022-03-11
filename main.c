@@ -25,26 +25,25 @@
 #include <util/delay.h>
 #include "PT6302.h"
 
-
 int main ()
 {
   static const uint8_t digitstates[] =
-    {0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11};
-  static const uint8_t custom_chars[8*5] = {0};
+      {0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11};
+  static const uint8_t custom_chars[8 * 5] = {0};
   static const uint8_t characters[] =
-    {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+      {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
   PT6302_startup ();
   set_ports (1, 1);
   set_digits (DISPLAY_DIGITS);
   set_duty (7);
   set_ADRAM (0, digitstates, DISPLAY_DIGITS);
-  set_CGRAM (0,custom_chars, 8);
+  set_CGRAM (0, custom_chars, 8);
   set_DCRAM (0, characters, DISPLAY_DIGITS);
   while (1)
     {
-      all_on();
+      all_on ();
       _delay_us (1000);
-      all_off();
+      all_off ();
       _delay_us (1000);
     }
 }

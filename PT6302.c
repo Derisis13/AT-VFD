@@ -29,10 +29,10 @@ inline void PT6302_startup (void)
   PORTB |= (CSBpin | CLKBpin);
   PORTB &= ~DINpin;
   PORTC |= RSTpin;
-  PT6302_reset();
+  PT6302_reset ();
 }
 
-inline void transmit_bit(const uint8_t data)
+static inline void transmit_bit (const uint8_t data)
 {
   PORTB &= ~CLKBpin;
   if ((data & 0x01) == 0)
