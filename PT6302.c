@@ -28,10 +28,8 @@ inline void PT6302_startup (void)
   DDRC |= RSTpin;
   PORTB |= (CSBpin | CLKBpin);
   PORTB &= ~DINpin;
-  PORTC &= ~RSTpin;
-  _delay_us (TPRZ);
   PORTC |= RSTpin;
-  _delay_us (TWRSTB);
+  PT6302_reset();
 }
 
 inline void transmit_bit(const uint8_t data)
@@ -160,4 +158,11 @@ void all_off (void)
 {
   const uint8_t command = 0x71;
   transmit_byte (command);
+}
+void PT6302_reset (void)
+{
+  PORTC &= ~RSTpin;
+  _delay_us (TPRZ);
+  PORTC |= RSTpin;
+  _delay_us (TWRSTB);
 }

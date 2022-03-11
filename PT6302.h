@@ -48,6 +48,12 @@ enum RAM_types{
  * ------------------------------------------------------------- */
 void PT6302_startup (void);
 
+/* ----------------------------------------------
+ * Resets the VFD controller trough its reset pin
+ * Handles reset delays
+ * ---------------------------------------------- */
+inline void PT6302_reset(void);
+
 /* --------------------------------
  * Transmits the LSB of data
  * Handles communication except CSB
