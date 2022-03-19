@@ -3,7 +3,7 @@ MCU=atmega88
 F_CPU=8000000UL
 CC=avr-gcc
 OBJCOPY=avr-objcopy
-CFLAGS=-std=c99 -Wall -g -O3 -mmcu=${MCU} -DF_CPU=${F_CPU} -I/usr/lib/avr/include/
+CFLAGS=-std=c99 -Wall -g -Os -mcall-prologues -mmcu=${MCU} -DF_CPU=${F_CPU} -I/usr/lib/avr/include/
 TARGET=main
 SRCS=main.c PT6302.c PT6302.h
 	

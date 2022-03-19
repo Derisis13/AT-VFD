@@ -18,8 +18,7 @@
  * USA
  */
 
-#define F_CPU 8000000UL
-#define DISPLAY_DIGITS 12
+#define DISPLAY_DIGITS 15
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -28,10 +27,10 @@
 int main ()
 {
   static const uint8_t digitstates[] =
-      {0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11, 0b11};
+      {0b00, 0b00, 0b00, 0b00, 0b00, 0b00, 0b00, 0b00, 0b00, 0b00, 0b00, 0b00};
   static const uint8_t custom_chars[8 * 5] = {0};
   static const uint8_t characters[] =
-      {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+      {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x48, 0x41, 0x35, 0x4B, 0x46, 0x55, 0x20, 0x20, 0x20};
   PT6302_startup ();
   set_ports (1, 1);
   set_digits (DISPLAY_DIGITS);
@@ -39,11 +38,8 @@ int main ()
   set_ADRAM (0, digitstates, DISPLAY_DIGITS);
   set_CGRAM (0, custom_chars, 8);
   set_DCRAM (0, characters, DISPLAY_DIGITS);
+  set_display_mode (NORMAL_MODE);
   while (1)
     {
-      all_on ();
-      _delay_us (1000);
-      all_off ();
-      _delay_us (1000);
     }
 }

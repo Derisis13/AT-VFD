@@ -93,8 +93,7 @@ void set_duty (uint8_t brightness)
     {
       brightness = 7;
     }
-  const uint8_t command = 0x50 | brightness;
-  transmit_byte (command);
+  transmit_byte (0x50 | brightness);
 }
 
 void set_digits (uint8_t digit_count)
@@ -138,6 +137,7 @@ void set_CGRAM (const uint8_t address, const uint8_t *data, uint8_t size)
     }
   transmit_bytes (payload, size);
 }
+
 void set_DCRAM (const uint8_t address, const uint8_t *cg_address, uint8_t size)
 {
   if (address > DISPLAY_DIGITS)
@@ -152,17 +152,12 @@ void set_DCRAM (const uint8_t address, const uint8_t *cg_address, uint8_t size)
     }
   transmit_bytes (payload, size);
 }
-void all_on (void)
+
+void set_display_mode (enum display_modes mode)
 {
-  const uint8_t command = 0x72;
-  transmit_byte (command);
+  transmit_byte (mode | 0x70);
 }
 
-void all_off (void)
-{
-  const uint8_t command = 0x71;
-  transmit_byte (command);
-}
 void PT6302_reset (void)
 {
   PORTC &= ~RSTpin;

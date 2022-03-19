@@ -43,6 +43,12 @@ enum RAM_types {
   ADRAM = 0x30,
 };
 
+enum display_modes {
+  NORMAL_MODE = 0x0,
+  ALL_ON = 0x1,
+  ALL_OFF = 0x2,
+};
+
 /* -------------------------------------------------------------
  * Initial setup for the VFD controller interface
  * Sets up the connected pins and leaves them in inactive state.
@@ -122,14 +128,8 @@ void set_CGRAM (uint8_t address, const uint8_t *data, uint8_t size);
 void set_ADRAM (uint8_t address, const uint8_t *data, uint8_t size);
 
 /* -----------------------------------------
- * Turn all outputs of the VFD controller on
- * This is primarily used for testing
+ * Sets the VFD operation mode
+ * See operation modes in enum display_modes
  * Handles the entire communication
  * ----------------------------------------- */
-void all_on (void);
-
-/* ------------------------------------------
- * Turn all outputs of the VFD controller off
- * Handles the entire communication
- * ------------------------------------------ */
-void all_off (void);
+void set_display_mode (enum display_modes mode);
