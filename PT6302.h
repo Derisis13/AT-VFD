@@ -19,8 +19,9 @@
  * USA
  */
 
-#define DISPLAY_DIGITS 12
-
+#define DISPLAY_DIGITS 15
+#include <inttypes.h>
+#include <avr/io.h>
 /* PT6302 timing constants, all in usec */
 static const uint8_t TCW = 1;     //CLKB pulse width
 static const uint8_t TDOFF = 16;  //Data processing time
