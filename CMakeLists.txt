@@ -6,8 +6,9 @@ project(vfdprog C)
 set(CMAKE_C_COMPILER avr-gcc)
 set(OBJCOPY avr-objcopy)
 set(TARGET_CPU atmega88)
+set(F_CPU 8000000UL)
 
-add_compile_definitions("__AVR_${TARGET_CPU}__" "F_CPU=8000000UL")
+add_compile_definitions("__AVR_${TARGET_CPU}__" "F_CPU=${F_CPU}")
 include_directories(/usr/lib/avr/include)
 set(CMAKE_C_FLAGS "-Os -mcall-prologues -mmcu=${TARGET_CPU} -Wall")
 
