@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
  * USA
  */
-#define F_CPU 8000000UL
 #include <avr/io.h>
 #include <util/delay.h>
 #include "PT6302.h"
