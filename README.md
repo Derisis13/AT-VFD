@@ -13,7 +13,7 @@ Modify PT6302.h
 Include the PT6302.h in your application and use the functions to display whatever you want.
 
 ## Building
-Use **either** [GNU make](#GNU make) or [CMake](#CMake) whichever you're familiar with.
+Use **either** [GNU make](#GNU-make) or [CMake](#CMake) whichever you're familiar with.
 ### Dependencies
 The project uses `avr-libc` as well as `avr-gcc`, please install the packages neccesary. For building you need either GNU make or CMake.
 If you're using CLion, it should automatically pick up on `CMakeLists.txt`, but you still need to modify it to your hardware.
