@@ -66,12 +66,12 @@ int main() {
   while (1)
   {
     set_DCRAM(0, blank, DISPLAY_DIGITS);
-    for (int i = 0; i < DISPLAY_DIGITS; ++i)
+    for (int i = 0; i < DISPLAY_DIGITS - 4; ++i)
     {
       if (i % 2 == 0)
-        set_DCRAM(0, even_frame, i);
+        set_DCRAM(DISPLAY_DIGITS - i, even_frame, i);
       else
-        set_DCRAM(0, odd_frame, i);
+        set_DCRAM(DISPLAY_DIGITS - i, odd_frame, i);
       _delay_ms(250);
     }
   }
