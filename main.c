@@ -34,26 +34,26 @@ int main() {
           // rainbow 2 @ address 0x01
           0b0100100, 0b0010010, 0b0100100, 0b0010010, 0b0100100,
           // tail 1 @ address 0x02
-          0b0000000, 0b0001100, 0b0010000, 0b0111100, 0b0100110,
+          0b0000000, 0b0011000, 0b0000100, 0b0011110, 0b0110010,
           // tail 2 @ address 0x03
-          0b0000000, 0b0000000, 0b0001000, 0b0000000, 0b0000000,
+          0b0001000, 0b0000100, 0b0000100, 0b0011110, 0b0110010,
           // body @ address 0x04
-          0b0100110, 0b0100100, 0b0100110, 0b0100100, 0b0100110,
+          0b0110010, 0b0010010, 0b0110010, 0b0010010, 0b0110010,
           // body @ address 0x05
-          0b0100110, 0b0100100, 0b0100110, 0b0100100, 0b0100110,
+          0b0110010, 0b0010010, 0b0110010, 0b0010010, 0b0110010,
           // head 1 @ address 0x06
-          0b0001100, 0b0110010, 0b0001010, 0b0110010, 0b0001100,
+          0b0011000, 0b0100110, 0b0101000, 0b0100110, 0b0011000,
           // head 2 @ address 0x07
-          0b0011000, 0b1100100, 0b0010100, 0b1100100, 0b0011000,
+          0b0001100, 0b0010011, 0b0010100, 0b0010011, 0b0001100,
       };
   static const uint8_t ha5kfu[] =
       {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x48, 0x41, 0x35, 0x4B, 0x46, 0x55, 0x20, 0x20, 0x20};
   static const uint8_t blank[] =
       {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20};
   static const uint8_t even_frame[] =
-      {0x07, 0x05, 0x03, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00};
+      {0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x03, 0x05, 0x07};
   static const uint8_t odd_frame[] =
-      {0x06, 0x04, 0x02, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01};
+      {0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x02, 0x04, 0x06};
   PT6302_startup();
   set_ports(1, 1);
   set_digits(DISPLAY_DIGITS);
@@ -63,16 +63,26 @@ int main() {
   set_DCRAM(0, ha5kfu, DISPLAY_DIGITS);
   set_display_mode(NORMAL_MODE);
   _delay_ms(1000);
+  set_DCRAM(0, odd_frame, DISPLAY_DIGITS);
   while (1)
   {
     set_DCRAM(0, blank, DISPLAY_DIGITS);
-    for (int i = 0; i < DISPLAY_DIGITS - 4; ++i)
+    for (int i = 0; i < DISPLAY_DIGITS; ++i)
     {
-      if (i % 2 == 0)
-        set_DCRAM(DISPLAY_DIGITS - i, even_frame, i);
+      if (i % 2)
+      {
+        set_DCRAM(3, even_frame + DISPLAY_DIGITS - i - 1, i + 1);
+        _delay_ms(175);
+        set_DCRAM(3, odd_frame + DISPLAY_DIGITS - i - 1, i + 1);
+        _delay_ms(175);
+      }
       else
-        set_DCRAM(DISPLAY_DIGITS - i, odd_frame, i);
-      _delay_ms(250);
+      {
+        set_DCRAM(3, odd_frame + DISPLAY_DIGITS - i - 1, i + 1);
+        _delay_ms(175);
+        set_DCRAM(3, even_frame + DISPLAY_DIGITS - i - 1, i + 1);
+        _delay_ms(175);
+      }
     }
   }
 }
